@@ -28,11 +28,11 @@ const Header = ({ isOpen, setOpen, setOpenForm }: Props) => {
   return (
     <div
       className={twMerge(
-        "z-[9999] fixed top-0 left-0 max-w-7xl w-full p-4 transition-all duration-300",
+        "z-[9999] fixed top-0 left-0 w-full flex items-center justify-center p-4 transition-all duration-300",
         showHeader && "bg-[#26133a]"
       )}
     >
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-center justify-between max-w-7xl w-full">
         <img src="/logo.png" alt="pi network validate" className="h-10" />
         <div className="flex items-end justify-end md:hidden">
           <Hamburger toggled={isOpen} toggle={setOpen} color="white" />
