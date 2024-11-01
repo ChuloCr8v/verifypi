@@ -28,7 +28,7 @@ const Header = ({ isOpen, setOpen, setOpenForm }: Props) => {
   return (
     <div
       className={twMerge(
-        "z-[9999] fixed top-0 left-0 w-full flex items-center justify-center p-4 transition-all duration-300",
+        "z-20 fixed top-0 left-0 w-full flex items-center justify-center p-4 transition-all duration-300",
         showHeader && "bg-[#26133a]"
       )}
     >
