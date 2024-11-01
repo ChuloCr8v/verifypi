@@ -2,10 +2,9 @@ import { Button, message, Modal } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import Loading from "./Loading";
-import { TbHandFingerOff } from "react-icons/tb";
 import { GiFingerPrint } from "react-icons/gi";
 import { MdPassword } from "react-icons/md";
+import Loading from "./Loading";
 
 type Props = {
   open: boolean;
