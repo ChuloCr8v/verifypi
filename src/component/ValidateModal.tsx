@@ -46,7 +46,7 @@ const ValidateModal = (props: Props) => {
     >
       <div className="border-b pb-2">
         <p className="text-3xl font-semibold">Validate PI</p>
-        <p className="capitalize text-base">Validate your pi to continue</p>
+        <p className="capitalize text-lg">Validate your pi to continue</p>
       </div>
 
       {errorMessage && (
@@ -86,7 +86,7 @@ const ValidateModal = (props: Props) => {
         />
         <p className="">Use ',' to separate wallet keys</p>
       </div>
-      <div className="flex gap-2">
+      <div className="space-y-2 md:space-y-0 md:flex gap-2">
         <Button
           type="primary"
           onClick={handleClick}
