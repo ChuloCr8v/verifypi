@@ -1,11 +1,20 @@
+import { ConfigProvider } from "antd";
 import "./App.css";
 import LandingPage from "./page/LandingPage";
 
 function App() {
   return (
-    <div className="h-screen w-screen">
-      <LandingPage />
-    </div>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#c5960f",
+        },
+      }}
+    >
+      <div className="h-screen w-screen">
+        <LandingPage />
+      </div>
+    </ConfigProvider>
   );
 }
 

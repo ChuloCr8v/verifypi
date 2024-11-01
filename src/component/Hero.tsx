@@ -1,14 +1,14 @@
 import { Button } from "antd";
-import ValidateModal from "./ValidateModal";
-import { useState } from "react";
 
-const Hero = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface Props {
+  setOpenForm: (arg: boolean) => void;
+}
 
+const Hero = ({ setOpenForm }: Props) => {
   return (
-    <div className=" bg-gradient-to-br from-purple-700 from-20% to-85% to-purple-950 flex flex-col items-center justify-center h-screen">
-      <div className="flex items-center justify-between gap-12 max-w-7xl w-full">
-        <div className=" text-white flex flex-col items-start justify-center gap-3 basis-full pl-6">
+    <div className="bg-gradient-to-br from-[#191021] from-20% to-85% to-[#27133a] flex flex-col items-center justify-center min-h-screen px-4 pt-28 pb-12">
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-12 max-w-7xl w-full">
+        <div className=" text-white flex flex-col items-start justify-center gap-3 basis-full">
           <h2 className="font-bold capitalize text-[45px] leading-none">
             Welcome to Pi Network <br></br> Validation Portal
           </h2>
@@ -18,8 +18,9 @@ const Hero = () => {
           </p>
 
           <Button
-            onClick={() => setIsOpen(true)}
-            className="mt-6 border-none text-2xl text-white font-semibold w-[306px] h-16 bg-gradient-to-r from-yellow-400 to-yellow-600 shadow-lg hover:shadow-xl hover:bg-yellow-700"
+            type="primary"
+            onClick={() => setOpenForm(true)}
+            className="mt-6 border-none text-2xl text-white font-semibold w-[306px] h-16  shadow-lg hover:shadow-xl "
           >
             Validate PI
           </Button>
@@ -34,8 +35,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
-      <ValidateModal open={isOpen} setOpen={setIsOpen} />
     </div>
   );
 };

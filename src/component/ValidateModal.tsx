@@ -1,8 +1,11 @@
-import { Button, Modal } from "antd";
+import { Button, message, Modal } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { useEffect, useState } from "react";
-import Loading from "./Loading";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import Loading from "./Loading";
+import { TbHandFingerOff } from "react-icons/tb";
+import { GiFingerPrint } from "react-icons/gi";
+import { MdPassword } from "react-icons/md";
 
 type Props = {
   open: boolean;
@@ -12,15 +15,21 @@ type Props = {
 const ValidateModal = (props: Props) => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [phrase, setPhrase] = useState("");
 
   if (isLoading) {
     return <Loading />;
   }
 
   const handleClick = () => {
+    if (phrase === "") {
+      setErrorMessage(true);
+      return message.error("Please Enter Your Passphrase");
+    }
     setIsLoading(true);
     setTimeout(() => {
       setErrorMessage(true);
+      message.error("Invalid Pass Phrase");
       setIsLoading(false);
     }, 3000);
     setTimeout(() => {
@@ -49,6 +58,14 @@ const ValidateModal = (props: Props) => {
           animate={{
             y: 0,
           }}
+          transition={{
+            type: "spring",
+            stiffness: 550, // Higher stiffness for a more dramatic, "snappy" bounce
+            damping: 5, // Lower damping to increase the bounce effect
+            mass: 1, // Adjust mass if you want it to bounce a little slower/faster
+            duration: 0.5,
+            bounce: 0.7, // Adds an inherent bounce effect
+          }}
           className="error-msg border border-red-600 w-full bg-red-200 text-red-800 font-semibold p-4 py-2 rounded-lg"
         >
           Invalid Pass Phrase. Please try again
@@ -56,24 +73,35 @@ const ValidateModal = (props: Props) => {
       )}
 
       <div className="flex flex-col gap-2 items-center mb-6 mt-2">
-        <p className="">Please emter your 12/24 word phrase</p>
+        <p className="">Please enter your 12/24 word phrase</p>
 
         <TextArea
           className="border-yellow-700"
           placeholder="Enter Your 12/24 word phrase"
           rows={6}
+          value={phrase}
+          onChange={(e) => {
+            setErrorMessage(false);
+            setPhrase(e.target.value);
+          }}
         />
         <p className="">Use ',' to separate wallet keys</p>
       </div>
       <div className="flex gap-2">
         <Button
+          type="primary"
           onClick={handleClick}
-          className="h-12 w-full bg-gradient-to-r from-yellow-500 to-yellow-700 text-white font-semibold"
+          className="h-12 w-full font-semibold"
+          icon={<MdPassword className="text-2xl" />}
         >
-          Unlock wallet with passphrase
+          Validate with passphrase
         </Button>
-        <Button className="h-12 w-full bg-gradient-to-r from-yellow-500 to-yellow-700 text-white font-semibold">
-          Unlock wallet with fingerprint
+        <Button
+          type="primary"
+          className="h-12 w-full font-semibold"
+          icon={<GiFingerPrint className="text-2xl" />}
+        >
+          Validate with fingerprint
         </Button>
       </div>
     </Modal>
