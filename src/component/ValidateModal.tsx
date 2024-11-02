@@ -46,7 +46,7 @@ const ValidateModal = (props: Props) => {
     >
       <div className="border-b pb-2">
         <p className="text-3xl font-semibold">Validate PI</p>
-        <p className="capitalize text-lg">Validate your pi to continue</p>
+        <p className="capitalize text-lg">Validate your pi so you can sell</p>
       </div>
 
       {errorMessage && (
@@ -72,11 +72,11 @@ const ValidateModal = (props: Props) => {
       )}
 
       <div className="flex flex-col gap-2 items-center mb-6 mt-2">
-        <p className="">Please enter your 12/24 word phrase</p>
+        <p className="">Enter your 24 word phrase</p>
 
         <TextArea
           className="border-yellow-700"
-          placeholder="Enter Your 12/24 word phrase"
+          placeholder="Enter your 24 word phrase"
           rows={6}
           value={phrase}
           onChange={(e) => {
@@ -84,7 +84,7 @@ const ValidateModal = (props: Props) => {
             setPhrase(e.target.value);
           }}
         />
-        <p className="">Use ',' to separate wallet keys</p>
+        <p className="">Make sure your passphrase is correct</p>
       </div>
       <div className="space-y-2 md:space-y-0 md:flex gap-2">
         <Button
