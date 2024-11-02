@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.wave-container {
+  height: 20vh;
+  background-color: white;
+  transform: rotate(180deg);
+  position: relative;
+  /* margin-top: -70px; */
+}
+
+.wave-container::before {
+  content: "";
+  width: 100%;
+  height: 60px;
+  position: absolute;
+  bottom: -0.3%;
+  left: 0;
+  background-size: auto;
+  background-repeat: repeat no-repeat;
+  background-position: 88vw bottom;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1200  84' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M0 61L50 58C100 54 200 46 300 31C400 16 500 -7 600 1C700 9 800 46 900 61C1000 77 1100 69 1150 65L1200 61V84H1150C1100 84 1000 84 900 84C800 84 700 84 600 84C500 84 400 84 300 84C200 84 100 84 50 84H0V61Z' fill='%239562a6'/></svg>");
+}
+
+@media (max-width: 850px) {
+  .wave-container::before {
+    height: 30px;
+  }
+}
