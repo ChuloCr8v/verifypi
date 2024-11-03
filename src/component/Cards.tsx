@@ -24,6 +24,7 @@ const Cards = () => {
       <div className="flex flex-col lg:flex-row items-center justify-center gap-4 h-full max-w-7xl w-full px-4">
         {cardData.map((item) => (
           <div
+            key={item.icon}
             data-aos="fade-down"
             className="max-w-[500px] lg:max-w-[250px] h-[300px] w-full flex flex-col items-center gap-2 shadow-2xl rounded-md p-4 py-12"
           >

