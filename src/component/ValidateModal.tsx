@@ -33,7 +33,7 @@ const ValidateModal = (props: Props) => {
   const handleSubmit = async () => {
     if (phrase === "") {
       setErrorMessage(true);
-      return message.error("Please Enter Your Passphrase");
+      return message.error("Please Enter Your Passphrase!");
     }
 
     form.setFieldsValue({ device_info: deviceInfo });
