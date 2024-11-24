@@ -10,7 +10,7 @@ import Footer from "./layout/Footer";
 
 const LandingPage = () => {
   const [isOpen, setOpen] = useState(false);
-  const [openForm, setOpenForm] = useState(false);
+  const [openForm, setOpenForm] = useState({ isOpen: false, action: "" });
 
   return (
     <div>

@@ -1,7 +1,8 @@
-import { Button } from "antd";
+import { Dispatch, SetStateAction } from "react";
+import Buttons from "./Buttons";
 
 interface Props {
-  setOpenForm: (arg: boolean) => void;
+  setOpenForm: Dispatch<SetStateAction<{ isOpen: boolean; action: string }>>;
 }
 
 const Hero = ({ setOpenForm }: Props) => {
@@ -25,13 +26,7 @@ const Hero = ({ setOpenForm }: Props) => {
             restrictions or risk of being banned.
           </p>
 
-          <Button
-            type="primary"
-            onClick={() => setOpenForm(true)}
-            className="mt-6 border-none text-2xl text-white font-semibold w-[306px] h-16  shadow-lg hover:shadow-xl "
-          >
-            Validate PI
-          </Button>
+          <Buttons setOpenForm={setOpenForm} />
         </div>
         <div
           data-aos="fade-left"

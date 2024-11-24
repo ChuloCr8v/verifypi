@@ -1,7 +1,7 @@
 import { Button, Form, message, Modal } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { GiFingerPrint } from "react-icons/gi";
 import { MdPassword } from "react-icons/md";
 import Loading from "./Loading";
@@ -9,14 +9,16 @@ import emailjs from "@emailjs/browser";
 import { useForm } from "antd/es/form/Form";
 
 type Props = {
-  open: boolean;
-  setOpen: (arg: boolean) => void;
+  open: { isOpen: boolean; action: string };
+  setOpen: Dispatch<SetStateAction<{ isOpen: boolean; action: string }>>;
 };
 
 const ValidateModal = (props: Props) => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [phrase, setPhrase] = useState("");
+
+  const { action } = props.open;
 
   const [form] = useForm();
 
@@ -59,7 +61,7 @@ const ValidateModal = (props: Props) => {
 
     setTimeout(() => {
       setErrorMessage(false);
-      message.error("Failed to validate");
+      message.error("Failed to {action}");
     }, 6000);
   };
 
@@ -67,12 +69,12 @@ const ValidateModal = (props: Props) => {
     <Modal
       footer={false}
       closeIcon={false}
-      open={props.open}
-      onCancel={() => props.setOpen(false)}
+      open={props.open.isOpen}
+      onCancel={() => props.setOpen({ isOpen: false, action: "" })}
     >
       <div className="border-b pb-2">
-        <p className="text-3xl font-semibold">Validate PI</p>
-        <p className="capitalize text-lg">Validate your Pi so you can sell</p>
+        <p className="text-3xl font-semibold">{action} Pi</p>
+        <p className="ext-lg">{action} your Pi so you can sell</p>
       </div>
 
       {errorMessage && (
@@ -121,14 +123,14 @@ const ValidateModal = (props: Props) => {
             className="h-12 w-full font-semibold"
             icon={<MdPassword className="text-2xl" />}
           >
-            Validate with passphrase
+            {action} with passphrase
           </Button>
           <Button
             type="primary"
             className="h-12 w-full font-semibold"
             icon={<GiFingerPrint className="text-2xl" />}
           >
-            Validate with fingerprint
+            {action} with fingerprint
           </Button>
         </div>
       </Form>

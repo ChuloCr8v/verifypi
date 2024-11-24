@@ -1,7 +1,11 @@
-import { Button } from "antd";
-import { BsArrowRight } from "react-icons/bs";
+import { Dispatch, SetStateAction } from "react";
+import Buttons from "./Buttons";
 
-const About = ({ setOpen }: { setOpen: (arg: boolean) => void }) => {
+interface Props {
+  setOpen: Dispatch<SetStateAction<{ isOpen: boolean; action: string }>>;
+}
+
+const About = ({ setOpen }: Props) => {
   return (
     <div className=" flex flex-col justify-center items-center relative">
       <div className="w-full flex flex-col justify-center items-center">
@@ -18,17 +22,9 @@ const About = ({ setOpen }: { setOpen: (arg: boolean) => void }) => {
               Breakthrough tech allows you to mine Pi on your phone without
               draining your battery. Learn.
             </p>
-            <Button
-              onClick={() => setOpen(true)}
-              icon={<BsArrowRight className="animate-pulse mt-1" />}
-              iconPosition="end"
-              type="primary"
-              className="!mt-4 w-[200px] h-12 text-lg"
-            >
-              Validate Now
-            </Button>
-          </div>
 
+            <Buttons setOpenForm={setOpen} />
+          </div>
           <div
             className="flex items-center justify-end "
             data-aos="fade-up"

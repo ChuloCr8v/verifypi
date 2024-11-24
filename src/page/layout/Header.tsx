@@ -5,7 +5,7 @@ import Menu from "./Menu";
 
 type Props = {
   isOpen: boolean;
-  setOpenForm: (arg: boolean) => void;
+  setOpenForm: Dispatch<SetStateAction<{ isOpen: boolean; action: string }>>;
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 

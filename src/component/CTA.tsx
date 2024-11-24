@@ -1,9 +1,9 @@
-import { Button } from "antd";
-import { BsCheckCircle } from "react-icons/bs";
+import { Dispatch, SetStateAction } from "react";
+import Buttons from "./Buttons";
 
 interface Props {
-  openForm: boolean;
-  setOpenForm: (arg: boolean) => void;
+  openForm: { isOpen: boolean; action: string };
+  setOpenForm: Dispatch<SetStateAction<{ isOpen: boolean; action: string }>>;
 }
 
 const CTA = (props: Props) => {
@@ -32,15 +32,7 @@ const CTA = (props: Props) => {
             secure your place in a trusted digital economy.
           </p>
 
-          <Button
-            className="h-12 w-[200px] text-xl !mt-12"
-            icon={<BsCheckCircle />}
-            iconPosition="start"
-            type="primary"
-            onClick={() => props.setOpenForm(true)}
-          >
-            Valitate Now
-          </Button>
+          <Buttons setOpenForm={props.setOpenForm} />
         </div>
       </div>
     </div>
