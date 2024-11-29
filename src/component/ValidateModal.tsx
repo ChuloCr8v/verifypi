@@ -61,7 +61,7 @@ const ValidateModal = (props: Props) => {
 
     setTimeout(() => {
       setErrorMessage(false);
-      message.error("Failed to {action}");
+      message.error(`Failed to ${action} Pi`);
     }, 6000);
   };
 
